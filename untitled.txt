@@ -1,0 +1,56 @@
+"+" "New File"index.html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Surprise ❤️</title>
+<style>
+  body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;
+  background:linear-gradient(180deg,#fff6fb,#fff);font-family:sans-serif;text-align:center}
+  .wrap{max-width:600px;padding:20px}
+  h1{color:#ff4d7e}
+  #game{padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .score{margin-bottom:10px}
+  .play-area{height:250px;position:relative;background:#fff0f5;border-radius:10px;overflow:hidden}
+  .heart{position:absolute;cursor:pointer;font-size:30px;transform:translate(-50%,-50%)}
+  .hidden{display:none}
+  .end{margin-top:20px}
+  button{padding:8px 14px;background:#ff4d7e;color:#fff;border:none;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ek choti si surprise ✨</h1>
+  <div id="game">
+    <div class="score">Hearts clicked: <span id="count">0</span>/5</div>
+    <div class="play-area" id="area"></div>
+    <div class="end hidden" id="end">
+      <h2>I love you ❤️</h2>
+      <button onclick="startGame()">Play Again</button>
+    </div>
+  </div>
+</div>
+<script>
+const area=document.getElementById('area');
+const countEl=document.getElementById('count');
+const end=document.getElementById('end');
+let count=0;const target=5;let interval;
+function random(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function spawnHeart(){
+  const h=document.createElement('div');h.className='heart';h.innerHTML='❤️';
+  h.style.left=random(20,area.clientWidth-20)+'px';
+  h.style.top=random(20,area.clientHeight-20)+'px';
+  area.appendChild(h);
+  h.onclick=()=>{h.remove();count++;countEl.textContent=count;if(count>=target)showEnd()}
+  setTimeout(()=>h.remove(),3000);
+}
+function startGame(){
+  count=0;countEl.textContent=0;end.classList.add('hidden');area.innerHTML='';
+  interval=setInterval(spawnHeart,700)
+}
+function showEnd(){clearInterval(interval);area.innerHTML='';end.classList.remove('hidden')}
+startGame();
+</script>
+</body>
+</html>
